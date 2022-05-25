@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL.h>
+#include <random>
 
 
 int main(int argc, char** argv) {
@@ -29,7 +30,13 @@ int main(int argc, char** argv) {
 		}
 
 
-
+		for (int n_i = 0; n_i < 120; n_i++) {
+			SDL_SetRenderDrawColor(renderer, rand() % 255, rand() % 255, rand() % 255, 255);
+			SDL_RenderClear(renderer);
+			fprintf(stdout, "%d\n", n_i);
+			SDL_RenderPresent(renderer);
+			SDL_Delay(16);
+		}
 
 
 		SDL_Delay(3000); //Juste pour le test 
