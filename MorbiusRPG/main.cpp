@@ -5,10 +5,13 @@
 #include <iostream>
 
 #include "Start.h"
+#include "FPSAffich.h"
 
 int main(int argc, char** argv) {
 
 	Start Tout;
+	FPSAffich FPS;
+
 	if (Tout.startAll() == -1) {
 		return -1;
 	}
@@ -20,9 +23,6 @@ int main(int argc, char** argv) {
 
 	int n_avaX = 0; //Pour la position du joueur en X
 	int n_avaY = 0; //en Y
-
-	int n_nbrFrame = 0; //Le nombre de frame totale
-	int n_nbrFrameUneSeconde = 0; //Pour connaître les frames par secondes
 
 	int n_FirstFrame = 0; //La premiere frame de la boucle 
 	int delayTimer = 0; //Les ms pour le delay
@@ -43,10 +43,9 @@ int main(int argc, char** argv) {
 	TTF_Font* police = TTF_OpenFont("Game_Of_Squids.ttf", 64);
 	if (police == NULL) {
 		fprintf(stdout, "Erreur chargement de la police (%s)", TTF_GetError());
+		return -1;
 	}
 	SDL_Color policeColeur = { 0, 255, 0, 255 }; //La couleur du texte
-	char textFps[30] = ""; //Le texte qui sera affiche 
-	char textNbrFps[30] = ""; //Le texte qui contient le nombre de FPS
 	SDL_Rect posFps = {0, -8, 150, 50}; //La position d'affichage
 
 	while (true) { //La boucle principal de gameplay
@@ -91,28 +90,10 @@ int main(int argc, char** argv) {
 		posRec.x = posRec.x + n_avaX; //Fait bouger le joueur, qu'il est une entree ou non
 		posRec.y = posRec.y + n_avaY;
 
-		if (SDL_GetTicks() / 1000 > n_nbrFrame / 1000) { //Calcule si une seconde est passe
-			//fprintf(stdout, "FPS : %d (%d)\n", n_nbrFrameUneSeconde, SDL_GetTicks()); //Affiche le nombre de frame dans la seconde precedente et affiche le nombre de ticks depuis le debut
-
-			strcpy_s(textFps, "Fps : "); //Remet a jour le texte a afficher
-			sprintf_s(textNbrFps, "%d", n_nbrFrameUneSeconde); //Transeforme le int en char
-			strcat_s(textFps, textNbrFps); //Copy le char des fps dans le texte final
-
-			n_nbrFrame = SDL_GetTicks(); //Remet le nbrFrame total remis a jour
-			n_nbrFrameUneSeconde = 0; //Puis remet a 0 le nombre de frame dans une seconde
-		}
-		n_nbrFrameUneSeconde++; //Ajoute un frame par bouble
-
-		SDL_Surface* TexteZone = TTF_RenderText_Solid(police, textFps, policeColeur); //Transeforme le texte en surface
-		SDL_Texture* TexteZoneTex = SDL_CreateTextureFromSurface(renderer, TexteZone); //Puis en texture
-
 		SDL_RenderClear(renderer); //Clean le renderer avant de le reafficher
 		SDL_RenderCopy(renderer, limage, NULL, &posRec); //Met la position de l'image
-		SDL_RenderCopy(renderer, TexteZoneTex, NULL, &posFps); //Affiche les FPS a l'ecran
+		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, police, policeColeur);
 		SDL_RenderPresent(renderer); //Puis affiche a l'ecran 
-
-		SDL_FreeSurface(TexteZone); //Détruit la texture et la surface sinon surcharge
-		SDL_DestroyTexture(TexteZoneTex);
 
 		delayTimer = 16 - (SDL_GetTicks() - n_FirstFrame); //16 pour 60 fps - le temps de process
 		if (delayTimer < 0) { //Si c'est en dessous de 1, le temps de process est trop long
