@@ -150,12 +150,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FPSAffich.cpp" />
+    <ClCompile Include="JoueurAttack.cpp" />
     <ClCompile Include="JoueurLibre.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Start.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSAffich.h" />
+    <ClInclude Include="JoueurAttack.h" />
     <ClInclude Include="JoueurLibre.h" />
     <ClInclude Include="Start.h" />
   </ItemGroup>

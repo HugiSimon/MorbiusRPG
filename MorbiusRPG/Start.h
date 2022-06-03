@@ -21,6 +21,8 @@ public:
 	int testWindow(SDL_Window* window);
 	int testRenderer(SDL_Renderer* renderer);
 
+	int End();
+
 private:
 
 };

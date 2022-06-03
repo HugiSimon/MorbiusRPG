@@ -3,16 +3,20 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <map>
 
 #include "Start.h"
 #include "FPSAffich.h"
 #include "JoueurLibre.h"
+#include "JoueurAttack.h"
 
 int main(int argc, char** argv) {
 
 	Start Tout;
 	FPSAffich FPS;
 	JoueurLibre JoueurL;
+	JoueurAttack JoueurA;
+	bool Libre = true;
 
 	if (Tout.startAll() == -1) {
 		return -1;
@@ -39,15 +43,19 @@ int main(int argc, char** argv) {
 
 	while (true) { //La boucle principal de gameplay
 
+		SDL_RenderClear(renderer); //Clean le renderer avant de le reafficher
 		n_FirstFrame = SDL_GetTicks();
 
-		if (JoueurL.mouvement() == -1) {
-			break;
+		if (Libre) {
+			JoueurL.mouvement();
+			JoueurL.affichJoueur(renderer);
+		}
+		else {
+
 		}
 
-		SDL_RenderClear(renderer); //Clean le renderer avant de le reafficher
-		JoueurL.affichJoueur(renderer);
 		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, police, policeColeur);
+
 		SDL_RenderPresent(renderer); //Puis affiche a l'ecran 
 
 		delayTimer = 16 - (SDL_GetTicks() - n_FirstFrame); //16 pour 60 fps - le temps de process
@@ -55,7 +63,12 @@ int main(int argc, char** argv) {
 			delayTimer = 0; //On remet a 0
 		}
 
+		if (Tout.End() == -1) {
+			break;
+		}
+
 		SDL_Delay(delayTimer);
+
 	}
 
 	JoueurL.destroyTexture();

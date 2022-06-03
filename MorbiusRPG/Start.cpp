@@ -82,3 +82,14 @@ int Start::testRenderer(SDL_Renderer* renderer)
 	}
 	return 0;
 }
+
+int Start::End()
+{
+	SDL_Event tempEvent;
+	if (SDL_PollEvent(&tempEvent)) {
+		if (tempEvent.type == SDL_QUIT) {
+			return -1;
+		}
+	}
+	return 0;
+}

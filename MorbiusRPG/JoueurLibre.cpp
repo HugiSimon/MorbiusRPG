@@ -39,17 +39,13 @@ void JoueurLibre::setPosition(int n_x, int n_y)
 	this->position.y = n_y;
 }
 
-int JoueurLibre::mouvement()
+void JoueurLibre::mouvement()
 {
 	SDL_Event tempEvent;
 	if (SDL_PollEvent(&tempEvent)) {
 
-		if (tempEvent.type == SDL_QUIT) {
-			return -1;
-		}
-
 		if (SDL_KEYDOWN) {
-			switch (tempEvent.key.keysym.sym){
+			switch (tempEvent.key.keysym.sym) {
 				case SDLK_UP:
 					this->vectY = -2;
 					break;
@@ -79,8 +75,6 @@ int JoueurLibre::mouvement()
 
 	this->position.x = this->position.x + this->vectX;
 	this->position.y = this->position.y + this->vectY;
-
-	return 0;
 }
 
 void JoueurLibre::affichJoueur(SDL_Renderer *renderer)
