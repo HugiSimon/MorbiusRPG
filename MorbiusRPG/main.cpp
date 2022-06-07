@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 	FPSAffich FPS;
 	JoueurLibre JoueurL;
 	JoueurAttack JoueurA;
-	bool Libre = true;
+	bool Libre = false;
 
 	if (Tout.startAll() == -1) {
 		return -1;
@@ -51,7 +51,11 @@ int main(int argc, char** argv) {
 			JoueurL.affichJoueur(renderer);
 		}
 		else {
-
+			if (JoueurA.choisirAttack()) {
+				JoueurA.AttackEnnemie();
+			}
+			Libre = JoueurA.mainAttack();
+			JoueurA.petitAffichage(renderer, police);
 		}
 
 		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, police, policeColeur);

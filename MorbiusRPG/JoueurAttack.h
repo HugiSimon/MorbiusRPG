@@ -12,17 +12,21 @@ class JoueurAttack
 public:
 	JoueurAttack();
 
-	int mainAttack();
-	int AttackEnnemie();
-	int choisirAttack();
+	bool mainAttack();
+	void AttackEnnemie();
+	bool choisirAttack();
 	void Affichage();
-	void petitAffichage();
+	void petitAffichage(SDL_Renderer* renderer, TTF_Font* police);
 
 private:
-	SDL_Texture* perso;
 	SDL_Rect posi;
 	int PV;
 	std::map<std::string, int>attack;
 	int PVEnnemie;
+	int NumAttack;
+	int list[5];
+	bool antiRepeat;
+	int puisAttack;
+	int puisAttackE;
 
 };
