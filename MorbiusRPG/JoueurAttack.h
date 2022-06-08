@@ -28,5 +28,6 @@ private:
 	bool antiRepeat;
 	int puisAttack;
 	int puisAttackE;
+	int ticks;
 
 };

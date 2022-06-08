@@ -26,6 +26,8 @@ JoueurAttack::JoueurAttack()
 	this->puisAttack = 0;
 	this->puisAttackE = 0;
 
+	this->ticks = NULL;
+
 }
 
 bool JoueurAttack::mainAttack()
@@ -38,7 +40,9 @@ bool JoueurAttack::mainAttack()
 
 void JoueurAttack::AttackEnnemie()
 {
-	this->PV =  this->PV - rand() % 20;
+	int temp = rand() % 25;
+	this->PV = this->PV - temp;
+	this->puisAttackE = temp;
 	fprintf(stdout, "PV : %d\n", this->PV);
 }
 
@@ -70,6 +74,7 @@ bool JoueurAttack::choisirAttack()
 					this->puisAttack = this->list[NumAttack];
 					fprintf(stdout, "PVEnnemie : %d\n", this->PVEnnemie);
 					this->antiRepeat = false;
+					this->ticks = SDL_GetTicks();
 					return true;
 					break;
 				default:
@@ -79,7 +84,6 @@ bool JoueurAttack::choisirAttack()
 		}
 		switch (tempEvent.key.state) {
 		case SDL_RELEASED:
-			fprintf(stdout, "Salut\n");
 			this->antiRepeat = true;
 			break;
 		default:
@@ -91,16 +95,51 @@ bool JoueurAttack::choisirAttack()
 
 void JoueurAttack::Affichage()
 {
+	
 }
 
-void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Pour afficher les dégats faits ou recu 
+void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Pour afficher les degats faits ou recu 
 {
-	SDL_Color tempColor = { 229, 11, 36, 255 };
-	char tempDegat[30];
-	sprintf_s(tempDegat, "%d", this->puisAttack);
-	SDL_Surface* tempSurface = TTF_RenderText_Solid(police, tempDegat, tempColor);
-	SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-	this->posi = { 50, 400, 50, 50 };
-	SDL_RenderCopy(renderer, tempTexture, NULL, &posi);
-	//L'affichage reste 1 secondes (avec des getTicks) et quand la premiere est fini, la deuxieme se lance avec l'attack ennemie
+	if (this->ticks + 1000 > SDL_GetTicks()) {
+		SDL_Color tempColor = { 229, 11, 36, 255 };
+		char tempDegat[30];
+		sprintf_s(tempDegat, "%d", this->puisAttack);
+		SDL_Surface* tempSurface = TTF_RenderText_Solid(police, tempDegat, tempColor);
+		SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+		this->posi = { 50, 350, 50, 50 };
+
+		this->posi.x += rand() % 6 - 3;
+
+		SDL_RenderCopy(renderer, tempTexture, NULL, &posi);
+
+		SDL_FreeSurface(tempSurface);
+		SDL_DestroyTexture(tempTexture);
+	}
+	else {
+		if (this->ticks + 2000 > SDL_GetTicks()) {
+			SDL_Color tempColor = { 229, 11, 36, 255 };
+			char tempDegat[30];
+			sprintf_s(tempDegat, "%d", this->puisAttackE);
+			SDL_Surface* tempSurface = TTF_RenderText_Solid(police, tempDegat, tempColor);
+			SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+			this->posi = { 700, 100, 25, 50 };
+
+			if (this->puisAttackE == 1) {
+				this->posi.w = 7;
+			}
+			if (this->puisAttackE > 1) {
+				this->posi.w = 25;
+			}
+			if (this->puisAttackE > 9) {
+				this->posi.w = 50;
+			}
+
+			this->posi.x += rand() % 6 - 3;
+
+			SDL_RenderCopy(renderer, tempTexture, NULL, &posi);
+
+			SDL_FreeSurface(tempSurface);
+			SDL_DestroyTexture(tempTexture);
+		}
+	}
 }

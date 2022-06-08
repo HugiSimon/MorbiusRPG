@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 	if (Tout.startAll() == -1) {
 		return -1;
 	}
-	SDL_Window *pWindow = Tout.createWindow("MorbiusRPG", 640, 480);
+	SDL_Window *pWindow = Tout.createWindow("MorbiusRPG", 800, 480);
 	SDL_Renderer* renderer = Tout.createRenderer(pWindow, -1);
 	if (Tout.testAll(pWindow, renderer) == -1) {
 		return -1;
