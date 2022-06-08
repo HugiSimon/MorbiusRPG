@@ -15,13 +15,13 @@ public:
 	bool mainAttack();
 	void AttackEnnemie();
 	bool choisirAttack();
-	void Affichage();
+	void Affichage(SDL_Renderer* renderer, TTF_Font* police);
 	void petitAffichage(SDL_Renderer* renderer, TTF_Font* police);
 
 private:
 	SDL_Rect posi;
 	int PV;
-	std::map<std::string, int>attack;
+	std::string listNom[5];
 	int PVEnnemie;
 	int NumAttack;
 	int list[5];

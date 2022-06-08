@@ -33,8 +33,9 @@ int main(int argc, char** argv) {
 	JoueurL.setTexture("mdr.jpg", renderer, 150, 235);
 	JoueurL.setPosition(200, 50);
 
-	TTF_Font* police = TTF_OpenFont("Game_Of_Squids.ttf", 64);
-	if (police == NULL) {
+	TTF_Font* policeSquid = TTF_OpenFont("Game_Of_Squids.ttf", 64);
+	TTF_Font* policeCoolvectica = TTF_OpenFont("coolvetica-compressed-hv.ttf", 64);
+	if (policeSquid == NULL && policeCoolvectica == NULL) {
 		fprintf(stdout, "Erreur chargement de la police (%s)", TTF_GetError());
 		return -1;
 	}
@@ -55,10 +56,11 @@ int main(int argc, char** argv) {
 				JoueurA.AttackEnnemie();
 			}
 			Libre = JoueurA.mainAttack();
-			JoueurA.petitAffichage(renderer, police);
+			JoueurA.Affichage(renderer, policeCoolvectica);
+			JoueurA.petitAffichage(renderer, policeCoolvectica);
 		}
 
-		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, police, policeColeur);
+		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, policeSquid, policeColeur);
 
 		SDL_RenderPresent(renderer); //Puis affiche a l'ecran 
 
