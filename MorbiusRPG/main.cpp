@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 	JoueurL.setTexture("devant.png", renderer, 32, 40);
 	JoueurL.setPosition(200, 50);
 
-	JoueurA.chargetexture(renderer, "derriere.png", "devant_ennemie.png");
+	JoueurA.chargetexture(renderer, "derriere.png", "devant_ennemie.png", "combat_nature.png");
 
 	TTF_Font* policeSquid = TTF_OpenFont("Game_Of_Squids.ttf", 64);
 	TTF_Font* policeCoolvectica = TTF_OpenFont("coolvetica-compressed-hv.ttf", 64);
