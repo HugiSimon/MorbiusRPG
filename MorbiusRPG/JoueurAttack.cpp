@@ -28,6 +28,9 @@ JoueurAttack::JoueurAttack()
 
 	this->ticks = NULL;
 
+	this->perso = NULL;
+	this->perso = NULL;
+
 }
 
 bool JoueurAttack::mainAttack()
@@ -152,6 +155,14 @@ void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 		tempRect.y += 20;
 	}
 
+	tempRect = { 80, 225, 96, 120 };
+	SDL_SetTextureBlendMode(this->perso, SDL_BLENDMODE_ADD);
+	SDL_RenderCopy(renderer, this->perso, NULL, &tempRect);
+
+	tempRect = { 667, 50, 72, 96 };
+	SDL_SetTextureBlendMode(this->ennemie, SDL_BLENDMODE_ADD);
+	SDL_RenderCopy(renderer, this->ennemie, NULL, &tempRect);;
+
 	SDL_SetRenderDrawColor(renderer, 68, 68, 68, 255);
 }
 
@@ -199,4 +210,33 @@ void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Po
 			SDL_DestroyTexture(tempTexture);
 		}
 	}
+}
+
+int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const char* ennemie)
+{
+	SDL_DestroyTexture(this->perso);
+	SDL_DestroyTexture(this->ennemie);
+
+	SDL_Surface* tempSuface = IMG_Load(perso);
+	this->perso = SDL_CreateTextureFromSurface(renderer, tempSuface);
+
+	if (this->perso == NULL) {
+		fprintf(stdout, "Erreur texture (%s)", SDL_GetError());
+		return -1;
+	}
+
+	SDL_FreeSurface(tempSuface);
+
+	SDL_Surface* tempSuface2 = IMG_Load(ennemie);
+	SDL_SetTextureBlendMode(this->ennemie, SDL_BLENDMODE_ADD);
+	this->ennemie = SDL_CreateTextureFromSurface(renderer, tempSuface2);
+
+	if (this->ennemie == NULL) {
+		fprintf(stdout, "Erreur texture (%s)", SDL_GetError());
+		return -1;
+	}
+
+	SDL_FreeSurface(tempSuface2);
+
+	return 0;
 }

@@ -18,7 +18,7 @@ int JoueurLibre::setTexture(const char* fichier, SDL_Renderer *renderer, int n_w
 		fprintf(stdout, "Erreur chargement de l'image (%s)", IMG_GetError());
 		return -1;
 	}
-
+	destroyTexture();
 	this->perso = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	if (this->perso == NULL) {
 		fprintf(stdout, "Erreur chargement de la texture (%s)", SDL_GetError());
@@ -39,7 +39,7 @@ void JoueurLibre::setPosition(int n_x, int n_y)
 	this->position.y = n_y;
 }
 
-void JoueurLibre::mouvement()
+void JoueurLibre::mouvement(SDL_Renderer* renderer)
 {
 	SDL_Event tempEvent;
 	if (SDL_PollEvent(&tempEvent)) {
@@ -48,15 +48,19 @@ void JoueurLibre::mouvement()
 			switch (tempEvent.key.keysym.sym) {
 				case SDLK_UP:
 					this->vectY = -2;
+					setTexture("derriere.png", renderer, 48, 60);
 					break;
 				case SDLK_DOWN:
 					this->vectY = 2;
+					setTexture("devant.png", renderer, 48, 60);
 					break;
 				case SDLK_LEFT:
 					this->vectX = -2;
+					setTexture("gauche.png", renderer, 48, 60);
 					break;
 				case SDLK_RIGHT:
 					this->vectX = 2;
+					setTexture("droite.png", renderer, 48, 60);
 					break;
 				default:
 					break;
@@ -79,6 +83,7 @@ void JoueurLibre::mouvement()
 
 void JoueurLibre::affichJoueur(SDL_Renderer *renderer)
 {
+	SDL_SetTextureBlendMode(this->perso, SDL_BLENDMODE_ADD);
 	SDL_RenderCopy(renderer, this->perso, NULL, &this->position);
 }
 

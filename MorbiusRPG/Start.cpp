@@ -32,7 +32,10 @@ int Start::startSDLImage()
 		fprintf(stdout, "Echec de l'initialisation de la SDL Image JPG (%s)\n", IMG_GetError());
 		return -1;
 	}
-	//Mettre tout les autres Modules
+	if (IMG_Init(IMG_INIT_PNG) == 0) {
+		fprintf(stdout, "Echec de l'initialisation de la SDL Image PNG (%s)\n", IMG_GetError());
+		return -1;
+	}
 }
 
 int Start::startSDLTTF()

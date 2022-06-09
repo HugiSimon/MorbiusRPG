@@ -17,6 +17,7 @@ public:
 	bool choisirAttack();
 	void Affichage(SDL_Renderer* renderer, TTF_Font* police);
 	void petitAffichage(SDL_Renderer* renderer, TTF_Font* police);
+	int chargetexture(SDL_Renderer* renderer, const char *perso, const char *ennemie);
 
 private:
 	SDL_Rect posi;
@@ -29,5 +30,7 @@ private:
 	int puisAttack;
 	int puisAttackE;
 	int ticks;
+	SDL_Texture* perso;
+	SDL_Texture* ennemie;
 
 };

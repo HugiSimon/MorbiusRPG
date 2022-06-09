@@ -30,8 +30,10 @@ int main(int argc, char** argv) {
 	int n_FirstFrame = 0; //La premiere frame de la boucle 
 	int delayTimer = 0; //Les ms pour le delay
 
-	JoueurL.setTexture("mdr.jpg", renderer, 150, 235);
+	JoueurL.setTexture("devant.png", renderer, 48, 60);
 	JoueurL.setPosition(200, 50);
+
+	JoueurA.chargetexture(renderer, "derriere.png", "devant_ennemie.png");
 
 	TTF_Font* policeSquid = TTF_OpenFont("Game_Of_Squids.ttf", 64);
 	TTF_Font* policeCoolvectica = TTF_OpenFont("coolvetica-compressed-hv.ttf", 64);
@@ -48,7 +50,7 @@ int main(int argc, char** argv) {
 		n_FirstFrame = SDL_GetTicks();
 
 		if (Libre) {
-			JoueurL.mouvement();
+			JoueurL.mouvement(renderer);
 			JoueurL.affichJoueur(renderer);
 		}
 		else {
