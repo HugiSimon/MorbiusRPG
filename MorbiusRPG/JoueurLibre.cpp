@@ -48,19 +48,19 @@ void JoueurLibre::mouvement(SDL_Renderer* renderer)
 			switch (tempEvent.key.keysym.sym) {
 				case SDLK_UP:
 					this->vectY = -2;
-					setTexture("derriere.png", renderer, 48, 60);
+					setTexture("derriere.png", renderer, 32, 40);
 					break;
 				case SDLK_DOWN:
 					this->vectY = 2;
-					setTexture("devant.png", renderer, 48, 60);
+					setTexture("devant.png", renderer, 32, 40);
 					break;
 				case SDLK_LEFT:
 					this->vectX = -2;
-					setTexture("gauche.png", renderer, 48, 60);
+					setTexture("gauche.png", renderer, 32, 40);
 					break;
 				case SDLK_RIGHT:
 					this->vectX = 2;
-					setTexture("droite.png", renderer, 48, 60);
+					setTexture("droite.png", renderer, 32, 40);
 					break;
 				default:
 					break;

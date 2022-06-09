@@ -9,6 +9,7 @@
 #include "FPSAffich.h"
 #include "JoueurLibre.h"
 #include "JoueurAttack.h"
+#include "Map.h"
 
 int main(int argc, char** argv) {
 
@@ -16,6 +17,7 @@ int main(int argc, char** argv) {
 	FPSAffich FPS;
 	JoueurLibre JoueurL;
 	JoueurAttack JoueurA;
+	Map LaMap;
 	bool Libre = false;
 
 	if (Tout.startAll() == -1) {
@@ -30,7 +32,7 @@ int main(int argc, char** argv) {
 	int n_FirstFrame = 0; //La premiere frame de la boucle 
 	int delayTimer = 0; //Les ms pour le delay
 
-	JoueurL.setTexture("devant.png", renderer, 48, 60);
+	JoueurL.setTexture("devant.png", renderer, 32, 40);
 	JoueurL.setPosition(200, 50);
 
 	JoueurA.chargetexture(renderer, "derriere.png", "devant_ennemie.png");
@@ -44,14 +46,20 @@ int main(int argc, char** argv) {
 	SDL_Color policeColeur = { 0, 255, 0, 255 }; //La couleur du texte
 	SDL_Rect posFps = {0, -8, 150, 50}; //La position d'affichage
 
+	if (LaMap.Init("tile.png", renderer) == -1) {
+		return -1;
+	}
+
 	while (true) { //La boucle principal de gameplay
 
 		SDL_RenderClear(renderer); //Clean le renderer avant de le reafficher
 		n_FirstFrame = SDL_GetTicks();
 
 		if (Libre) {
+			LaMap.MapTabl();
 			JoueurL.mouvement(renderer);
 			JoueurL.affichJoueur(renderer);
+			SDL_SetRenderDrawColor(renderer, 143, 179, 30, 255);
 		}
 		else {
 			if (JoueurA.choisirAttack()) {

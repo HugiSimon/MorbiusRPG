@@ -153,12 +153,14 @@
     <ClCompile Include="JoueurAttack.cpp" />
     <ClCompile Include="JoueurLibre.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Start.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FPSAffich.h" />
     <ClInclude Include="JoueurAttack.h" />
     <ClInclude Include="JoueurLibre.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Start.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
