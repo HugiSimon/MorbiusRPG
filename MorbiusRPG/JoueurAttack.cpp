@@ -29,8 +29,9 @@ JoueurAttack::JoueurAttack()
 	this->ticks = NULL;
 
 	this->perso = NULL;
-	this->perso = NULL;
+	this->ennemie = NULL;
 
+	this->background = NULL;
 }
 
 bool JoueurAttack::mainAttack()
@@ -92,7 +93,10 @@ bool JoueurAttack::choisirAttack()
 
 void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 {
-	SDL_Rect tempRect = { 25, 400, 204, 64 };
+	SDL_Rect tempRect = { 0, 0, 800, 480 };
+	SDL_RenderCopy(renderer, this->background, NULL, &tempRect);
+	
+	tempRect = { 25, 400, 204, 64 };
 	SDL_SetRenderDrawColor(renderer, 204, 10, 10, 255);
 	SDL_RenderFillRect(renderer, &tempRect);
 
@@ -193,12 +197,15 @@ void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Po
 			this->posi = { 102, 280, 50, 50 };
 
 			if (this->puisAttackE == 1) {
-				this->posi.w = 7;
+				this->posi.x = 125;
+				this->posi.w = 12;
 			}
 			if (this->puisAttackE > 1) {
+				this->posi.x = 115;
 				this->posi.w = 25;
 			}
 			if (this->puisAttackE > 9) {
+				this->posi.x = 102;
 				this->posi.w = 50;
 			}
 
@@ -212,7 +219,7 @@ void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Po
 	}
 }
 
-int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const char* ennemie)
+int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const char* ennemie, const char* background)
 {
 	SDL_DestroyTexture(this->perso);
 	SDL_DestroyTexture(this->ennemie);
@@ -237,6 +244,18 @@ int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const
 	}
 
 	SDL_FreeSurface(tempSuface2);
+
+	SDL_Surface* tempSuface3 = IMG_Load(background);
+	SDL_SetTextureBlendMode(this->background, SDL_BLENDMODE_ADD);
+	this->background = SDL_CreateTextureFromSurface(renderer, tempSuface3);
+
+	if (this->background == NULL) {
+		fprintf(stdout, "Erreur texture (%s)", SDL_GetError());
+		return -1;
+	}
+
+	SDL_FreeSurface(tempSuface3);
+
 
 	return 0;
 }
