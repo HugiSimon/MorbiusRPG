@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 	if (Tout.startAll() == -1) {
 		return -1;
 	}
-	SDL_Window *pWindow = Tout.createWindow("MorbiusRPG", 800, 480);
+	SDL_Window *pWindow = Tout.createWindow("MorbiusRPG", 800, 640);
 	SDL_Renderer* renderer = Tout.createRenderer(pWindow, -1);
 	if (Tout.testAll(pWindow, renderer) == -1) {
 		return -1;
@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 	int delayTimer = 0; //Les ms pour le delay
 
 	JoueurL.setTexture("devant.png", renderer, 32, 40);
-	JoueurL.setPosition(200, 50);
+	JoueurL.setPosition(384, 600);
 
 	JoueurA.chargetexture(renderer, "derriere.png", "devant_ennemie.png", "combat_nature.png");
 

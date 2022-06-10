@@ -93,23 +93,23 @@ bool JoueurAttack::choisirAttack()
 
 void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 {
-	SDL_Rect tempRect = { 0, 0, 800, 480 };
+	SDL_Rect tempRect = { 0, 0, 800, 640 };
 	SDL_RenderCopy(renderer, this->background, NULL, &tempRect);
 	
-	tempRect = { 25, 400, 204, 64 };
+	tempRect = { 25, 560, 204, 64 };
 	SDL_SetRenderDrawColor(renderer, 204, 10, 10, 255);
 	SDL_RenderFillRect(renderer, &tempRect);
 
 	switch (this->NumAttack)
 	{
 	case 0:
-		tempRect = { 27, 402, 200, 20 };
+		tempRect = { 27, 562, 200, 20 };
 		break;
 	case 1:
-		tempRect = { 27, 422, 200, 20 };
+		tempRect = { 27, 582, 200, 20 };
 		break;
 	case 2:
-		tempRect = { 27, 442, 200, 20 };
+		tempRect = { 27, 602, 200, 20 };
 		break;
 	default:
 		break;
@@ -119,9 +119,9 @@ void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 
 	if (this->PV > 0 && this->PVEnnemie > 0) {
 
-		tempRect = { 75, 350, 104, 14 };
+		tempRect = { 75, 510, 104, 14 };
 		SDL_RenderFillRect(renderer, &tempRect);
-		tempRect = { 77,352,this->PV * 100 / 150,10 };
+		tempRect = { 77,512,this->PV * 100 / 150,10 };
 		SDL_SetRenderDrawColor(renderer, 252, 60, 63, 255);
 		SDL_RenderFillRect(renderer, &tempRect);
 
@@ -134,7 +134,7 @@ void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 
 	}
 
-	tempRect = { 28, 404, 100, 16 };
+	tempRect = { 28, 564, 100, 16 };
 	SDL_Color tempColor = { 255, 255, 255, 255 };
 	for (int n_i = 0; n_i < 3; n_i++) {
 		SDL_Surface *tempSurface = TTF_RenderText_Solid(police, this->listNom[n_i].c_str(), tempColor);
@@ -159,7 +159,7 @@ void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 		tempRect.y += 20;
 	}
 
-	tempRect = { 80, 225, 96, 120 };
+	tempRect = { 80, 385, 96, 120 };
 	SDL_SetTextureBlendMode(this->perso, SDL_BLENDMODE_ADD);
 	SDL_RenderCopy(renderer, this->perso, NULL, &tempRect);
 
@@ -194,7 +194,7 @@ void JoueurAttack::petitAffichage(SDL_Renderer* renderer, TTF_Font* police) //Po
 			sprintf_s(tempDegat, "%d", this->puisAttackE);
 			SDL_Surface* tempSurface = TTF_RenderText_Solid(police, tempDegat, tempColor);
 			SDL_Texture* tempTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-			this->posi = { 102, 280, 50, 50 };
+			this->posi = { 102, 440, 50, 50 };
 
 			if (this->puisAttackE == 1) {
 				this->posi.x = 125;

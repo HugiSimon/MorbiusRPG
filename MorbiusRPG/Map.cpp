@@ -42,7 +42,7 @@ void Map::MapTabl()
 		fprintf(stderr, "Erreur\n");
 	}
 	else {
-		fscanf_s(fSortie, "%d", &sec1);
+		fscanf_s(fSortie, "%c", &sec1, 1);
 		for (int i = 0; i < 500; i++) {
 			fscanf_s(fSortie, "%d", &map[i]);
 			fscanf_s(fSortie, "%c", &sep, 1);
