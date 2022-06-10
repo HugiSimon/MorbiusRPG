@@ -49,6 +49,7 @@ int main(int argc, char** argv) {
 	if (LaMap.Init("tile.png", renderer) == -1) {
 		return -1;
 	}
+	SDL_Rect coli[500];
 
 	while (true) { //La boucle principal de gameplay
 
@@ -57,8 +58,12 @@ int main(int argc, char** argv) {
 
 		if (Libre) {
 			LaMap.MapTabl();
-			JoueurL.mouvement(renderer);
+			for (int n_i = 0; n_i < 500; n_i++) {
+				coli[n_i] = LaMap.getColi(n_i);
+			}
+			JoueurL.mouvement(renderer, coli);
 			JoueurL.affichJoueur(renderer);
+			JoueurL.lanceCombat(577, 290);
 			SDL_SetRenderDrawColor(renderer, 143, 179, 30, 255);
 		}
 		else {
@@ -70,7 +75,7 @@ int main(int argc, char** argv) {
 			JoueurA.petitAffichage(renderer, policeCoolvectica);
 		}
 
-		FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, policeSquid, policeColeur);
+		//FPS.affichFPS(FPS.CalculFPS(), renderer, posFps, policeSquid, policeColeur);
 
 		SDL_RenderPresent(renderer); //Puis affiche a l'ecran 
 

@@ -5,6 +5,10 @@ Map::Map()
 	this->tile = NULL;
 
 	this->renderer = NULL;
+
+
+
+	this->compt = 0;
 }
 
 int Map::Init(const char* tile, SDL_Renderer *Renderer)
@@ -76,10 +80,12 @@ void Map::MapTabl()
 	}
 
 	a = 0;
+	this->compt = 0;
 	for (int i = 0; i < 25; i++) {
 		for (int j = 0; j < 20; j++) {
 			map2[i][j] = mapc[a];
 			Texture(map2[i][j], i, j);
+			RectColi(map2[i][j], i, j);
 			a++;
 		}
 	}
@@ -98,4 +104,23 @@ int Map::Texture(int idTile, int posX, int posY)
 	SDL_Rect Coor = { posX % 25 * 32, posY % 133 * 32, 32, 32 };
 
 	SDL_RenderCopy(this->renderer, this->tile, &Ptile, &Coor);
+
+	return 1;
+}
+
+int Map::RectColi(int idTile, int posX, int posY)
+{
+	if (idTile == -1) {
+		return 0;
+	}
+
+	this->Coli[this->compt] = { posX*32, posY*32, 32, 32 };
+	this->compt++;
+
+	return 1;
+}
+
+SDL_Rect Map::getColi(int n_i)
+{
+	return this->Coli[n_i];
 }

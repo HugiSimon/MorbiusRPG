@@ -19,6 +19,8 @@ int JoueurLibre::setTexture(const char* fichier, SDL_Renderer *renderer, int n_w
 		return -1;
 	}
 	destroyTexture();
+	SDL_PixelFormat* format = tempSurface->format;
+	SDL_SetColorKey(tempSurface, SDL_TRUE, SDL_MapRGB(format, 0, 0, 0));
 	this->perso = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	if (this->perso == NULL) {
 		fprintf(stdout, "Erreur chargement de la texture (%s)", SDL_GetError());
@@ -39,7 +41,7 @@ void JoueurLibre::setPosition(int n_x, int n_y)
 	this->position.y = n_y;
 }
 
-void JoueurLibre::mouvement(SDL_Renderer* renderer)
+void JoueurLibre::mouvement(SDL_Renderer* renderer, SDL_Rect coli[500])
 {
 	SDL_Event tempEvent;
 	if (SDL_PollEvent(&tempEvent)) {
@@ -77,17 +79,56 @@ void JoueurLibre::mouvement(SDL_Renderer* renderer)
 		}
 	}
 
+	int futurX = this->position.x + this->vectX;
+	int futurY = this->position.y + this->vectY;
+
+	for (int n_i = 0; n_i < 500; n_i++) {
+		if ((futurX > coli[n_i].x && futurX < coli[n_i].x + coli[n_i].w) && (futurY < coli[n_i].y + coli[n_i].h && futurY > coli[n_i].y)) {
+			this->vectX = 0;
+		}
+		if ((futurX+32 > coli[n_i].x && futurX+32 < coli[n_i].x + coli[n_i].w) && (futurY < coli[n_i].y + coli[n_i].h && futurY > coli[n_i].y)) {
+			this->vectX = 0;
+		}
+		if ((futurX > coli[n_i].x && futurX < coli[n_i].x + coli[n_i].w) && (futurY+32 < coli[n_i].y + coli[n_i].h && futurY+32 > coli[n_i].y)) {
+			this->vectX = 0;
+		}
+		if ((futurX+32 > coli[n_i].x && futurX+32 < coli[n_i].x + coli[n_i].w) && (futurY+32 < coli[n_i].y + coli[n_i].h && futurY+32 > coli[n_i].y)) {
+			this->vectX = 0;
+		}
+
+
+		if ((futurY > coli[n_i].y && futurY < coli[n_i].y + coli[n_i].h) && (futurX > coli[n_i].x && futurX < coli[n_i].x + coli[n_i].w)) {
+			this->vectY = 0;
+		}
+		if ((futurY+32 > coli[n_i].y && futurY+32 < coli[n_i].y + coli[n_i].h) && (futurX > coli[n_i].x && futurX < coli[n_i].x + coli[n_i].w)) {
+			this->vectY = 0;
+		}
+		if ((futurY > coli[n_i].y && futurY < coli[n_i].y + coli[n_i].h) && (futurX+32 > coli[n_i].x && futurX+32 < coli[n_i].x + coli[n_i].w)) {
+			this->vectY = 0;
+		}
+		if ((futurY+32 > coli[n_i].y && futurY+32 < coli[n_i].y + coli[n_i].h) && (futurX+32 > coli[n_i].x && futurX+32 < coli[n_i].x + coli[n_i].w)) {
+			this->vectY = 0;
+		}
+	}
+
 	this->position.x = this->position.x + this->vectX;
 	this->position.y = this->position.y + this->vectY;
 }
 
 void JoueurLibre::affichJoueur(SDL_Renderer *renderer)
 {
-	SDL_SetTextureBlendMode(this->perso, SDL_BLENDMODE_ADD);
 	SDL_RenderCopy(renderer, this->perso, NULL, &this->position);
 }
 
 void JoueurLibre::destroyTexture()
 {
 	SDL_DestroyTexture(this->perso);
+}
+
+bool JoueurLibre::lanceCombat(int posX, int posY)
+{
+	if ((this->position.x > posX - 16 && this->position.x < posX + 16) && (this->position.y > posY - 20 && this->position.y < posY + 20)) {
+		return false;
+	}
+	return true;
 }

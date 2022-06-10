@@ -160,11 +160,9 @@ void JoueurAttack::Affichage(SDL_Renderer* renderer, TTF_Font* police)
 	}
 
 	tempRect = { 80, 385, 96, 120 };
-	SDL_SetTextureBlendMode(this->perso, SDL_BLENDMODE_ADD);
 	SDL_RenderCopy(renderer, this->perso, NULL, &tempRect);
 
 	tempRect = { 667, 50, 72, 96 };
-	SDL_SetTextureBlendMode(this->ennemie, SDL_BLENDMODE_ADD);
 	SDL_RenderCopy(renderer, this->ennemie, NULL, &tempRect);;
 
 	SDL_SetRenderDrawColor(renderer, 68, 68, 68, 255);
@@ -225,6 +223,8 @@ int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const
 	SDL_DestroyTexture(this->ennemie);
 
 	SDL_Surface* tempSuface = IMG_Load(perso);
+	SDL_PixelFormat *format = tempSuface->format;
+	SDL_SetColorKey(tempSuface, SDL_TRUE, SDL_MapRGB(format, 0, 0, 0));
 	this->perso = SDL_CreateTextureFromSurface(renderer, tempSuface);
 
 	if (this->perso == NULL) {
@@ -235,7 +235,8 @@ int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const
 	SDL_FreeSurface(tempSuface);
 
 	SDL_Surface* tempSuface2 = IMG_Load(ennemie);
-	SDL_SetTextureBlendMode(this->ennemie, SDL_BLENDMODE_ADD);
+	format = tempSuface2->format;
+	SDL_SetColorKey(tempSuface2, SDL_TRUE, SDL_MapRGB(format, 0, 0, 0));
 	this->ennemie = SDL_CreateTextureFromSurface(renderer, tempSuface2);
 
 	if (this->ennemie == NULL) {
@@ -246,7 +247,6 @@ int JoueurAttack::chargetexture(SDL_Renderer* renderer, const char* perso, const
 	SDL_FreeSurface(tempSuface2);
 
 	SDL_Surface* tempSuface3 = IMG_Load(background);
-	SDL_SetTextureBlendMode(this->background, SDL_BLENDMODE_ADD);
 	this->background = SDL_CreateTextureFromSurface(renderer, tempSuface3);
 
 	if (this->background == NULL) {
